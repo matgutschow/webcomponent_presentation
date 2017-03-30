@@ -1,0 +1,40 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Custom Element 1 -->
+<dom-module id="my-wrapper-element">
+    <template>
+        <style>
+             :host {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+            
+            div {
+                padding: 10px;
+            }
+            
+            .wrapper {
+                background: lightcoral;
+                border: 1px solid #444;
+            }
+        </style>
+        <div class="wrapper">
+            <span>Some Heading</span>
+            <content></content>
+            <span>Some footing</span>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-wrapper-element',
+       properties: {
+
+        }
+    });
+  </script>
+</dom-module>
+
+
+        <template>
+            //some content
+        </template>

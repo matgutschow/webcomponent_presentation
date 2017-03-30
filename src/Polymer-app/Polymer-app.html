@@ -1,0 +1,118 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/google-map/google-map-search.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<dom-module id="Polymer-app">
+  <template>
+    <style>
+      :host {
+        height: 100%;
+        display: block;        
+        margin: 0;
+        font-family: 'Roboto', 'Noto', sans-serif;
+        background-color: #eee;
+      }
+      
+       app-toolbar {
+        background-color: #4285f4;
+        color: #fff;
+      }
+      app-drawer {
+        --app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
+        --app-drawer-content-container: {
+          background-color: #B0BEC5;
+        }
+       .flex-vertical {
+            @apply(--layout-vertical);
+            height: 220px;
+          }
+          .flexchild-vertical {
+            @apply(--layout-flex);
+          }
+      }
+      .card{
+          margin:10px 0;
+          padding: 10px; 
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          box-shadow:  0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+      google-map {
+        height: 300px;
+      }
+
+    </style>
+     <app-toolbar>
+      <paper-icon-button icon="menu"></paper-icon-button>
+      <span>Polymer Demo</span>
+      </app-toolbar>
+
+      <!-- Content -->
+      <div class="container flex-vertical">
+        <div class="card">
+            <!--<food-input food={{foodSelection}}></food-input>-->
+            <paper-input label="What are you hungry for?" value={{foodSelection}}></paper-input>
+        </div>
+        <div class="card">              
+          <google-map-search map="[[map]]" query="[[foodSelection]]" types="restaurant" results="{{results}}"></google-map-search>
+          <google-map map="{{map}}" latitude="44.260514" api-key="AIzaSyBJLk5OCmWm4bC37UL99mwdxdNdXy2g3bo"
+                      longitude="-88.470458">
+            <template is="dom-repeat" items="{{results}}" as="marker">
+              <google-map-marker latitude="{{marker.latitude}}"
+                                longitude="{{marker.longitude}}">
+                <h2>{{marker.name}}</h2>
+                <span>{{marker.formatted_address}}</span>
+              </google-map-marker>
+            </template>
+          </google-map>
+        </div>
+      </div>
+      <!-- End Content -->
+
+      <app-drawer swipe-open>
+        some drawer content
+      </app-drawer>
+
+      <script>
+        var drawer = document.querySelector('app-drawer');
+        document.querySelector('paper-icon-button').addEventListener('tap', function() {
+          drawer.toggle();
+        });
+      </script>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'Polymer-app',
+      properties: {
+          map: Object,
+          results: Array,
+          marker: Object,
+          foodSelection: String,
+          start: String,
+          end: String,
+          stops:Array
+      },
+      getWayPoints: function(){
+        var result = [];
+
+        for(var i=0; i<stops.length;i++){
+          result.push({
+            "location":stops[i]
+          });
+        }
+
+        return result;
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+  <link rel="shortcut icon" href="./p-logo-32.png">
+  <title>Polymer - Demo</title>
+  <meta name="description" content="Polymer description">
+  <!-- See https://goo.gl/OOhYW5 -->
+  <link rel="manifest" href="/manifest.json">
+  <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="/src/Polymer-app/Polymer-app.html">
+  <link rel="import" href="/src/simple/simple-app.html">
+</head>
+
+<body>
+    <script>
+      var myGlobal = 'my global variable';
+      window.myGlobal = myGlobal;
+    </script>
+<style>
+  body{
+
+        background-color: #eee;
+  }
+</style>
+<!-- Template -->
+  <template>
+    <script>
+      console.log('does not log until template is stamped out!');
+    </script>
+    //some content
+  </template>
+<!-- End Template -->
+
+<!-- Simple components -->
+  <!--<simple-app></simple-app>-->
+<!-- End Simple components -->
+
+<!-- Polymer app -->
+  <polymer-app></polymer-app>  
+<!-- End Polymer app -->
+</body>
+
+</html>

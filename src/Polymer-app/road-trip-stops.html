@@ -1,0 +1,58 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<dom-module id="road-trip-stops">
+  <template>
+    <style>
+       :host {
+        display: block;
+      }
+      
+      iron-list {
+        height: 200px;
+        /* don't use % values unless the parent element is sized. */
+      }
+    </style>
+    <div>
+      <paper-input label="Starting from" value={{start}}></paper-input>
+      <paper-input label="Ending at" value={{end}}></paper-input>
+      <paper-input label="Enter Stop" id="stopInput"></paper-input>
+      <paper-button raised on-tap="addStop">Add stop</paper-button>
+    </div>
+    <div>
+      <span>We are stopping at: </span>
+      <template is="dom-repeat" items="[[stops]]">
+        <span>[[item]]</span>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'road-trip-stops',
+      properties: {
+        stops: {
+          type:Array,
+          notify: true,
+          reflectToAttribute:true
+        },
+        start: {
+          type: String,
+          notify: true,
+          reflectToAttribute:true
+        },
+        end: {
+          type: String,
+          notify: true,          
+          reflectToAttribute:true
+        }
+      },
+      ready: function(){
+        this.stops = new Array();
+      },
+      addStop: function(e){
+        this.push('stops',this.$.stopInput.value);
+      }
+    });
+  </script>
+</dom-module>

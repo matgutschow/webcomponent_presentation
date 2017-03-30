@@ -1,0 +1,64 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Custom Element 1 -->
+<dom-module id="my-prop-element">
+    <template>
+        <style>
+             :host {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+            
+            div {
+                padding: 10px;
+            }
+            
+            .wrapper {
+                background: lightblue;
+                border: 1px solid #444;
+            }
+        </style>
+        <div class="wrapper">
+            <label>Hello [[fullName]]</label>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-prop-element',
+       properties: {
+            person: {
+                type: Object
+            },
+            fullName: {
+                type: String,
+                reflectToAttribute: false, //dont show on element
+                computed: 'computeFullName(person.first, person.last)'
+                }
+        },
+        //lifecycle events
+        created: function() {
+            console.log(this.localName + '#' + this.id + ' was created');
+        },
+        ready: function() {
+            console.log(this.localName + '#' + this.id + ' has local DOM initialized');
+            if(this.person === undefined){
+                this.person = {
+                    'first': 'Polymer',
+                    'last': 'Project'
+                }
+            }
+        },
+        attached: function() {
+            console.log(this.localName + '#' + this.id + ' was attached');
+        },
+        detached: function() {
+            console.log(this.localName + '#' + this.id + ' was detached');
+        },
+        //end lifecycle events
+        //element apis 
+        computeFullName: function(first, last){
+            return first.toUpperCase() + ' ' + last; 
+        } 
+    });
+  </script>
+</dom-module>

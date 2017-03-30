@@ -1,0 +1,32 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Custom Element 1 -->
+<dom-module id="my-styles-element">
+    <template>
+        <style  >
+             :host {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .block{
+                /*height: var(--my-block-height, 30px);
+                width: var(--my-block-width, 100px);
+                background-color: var(--my-block-width, lightgreen);*/
+                @apply(--my-block-theme);
+            }
+            
+        </style>
+        <div class="wrapper">
+            <div class="block">Block 1</div>
+            <div class="block">Block 2</div>
+            <div class="block">Block 3</div>
+            <div class="block">Block 4</div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-styles-element'
+    });
+  </script>
+</dom-module>

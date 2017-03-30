@@ -1,0 +1,28 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Custom Element 1 -->
+<dom-module id="my-event-element">
+    <template>
+        <style>
+             :host {
+                display: block;
+                text-align: center;
+                margin: 10px 0;
+            }
+            
+        </style>
+        <div class="wrapper">
+           <button on-tap="fireAway">Click me</button>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-event-element',
+      fireAway: function(e){
+          var payload = {
+              'data': 'some payload'
+          };
+          this.fire('my-btn-click', payload)
+      }
+    });
+  </script>
+</dom-module>

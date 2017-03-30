@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>Native Web Component Test</title>
+    <link rel="import" href="./webcomponent-htmlImport.html">
+</head>
+
+<body>
+    <!-- Feature detection -->
+    <script>
+        function supportsImports() {
+        return 'import' in document.createElement('link');
+        }
+        function supportsTemplate() {
+            return 'content' in document.createElement('template');
+        }
+        function supportsCustomElements() {
+            return 'registerElement' in document;
+        }
+        function supportsShadowDOM(){
+            return document.body.attachShadow;
+        }
+        if (supportsImports()) {
+        console.log('Browser supports imports!')
+        // Good to go!
+        } else {
+        console.warn('Browser doesnt supports imports!')
+        // Use other libraries/require systems to load files.
+        }
+
+        if (supportsCustomElements()) {
+        console.log('Browser supports custom elements!')
+        // Good to go!
+        } else {
+        console.warn('Browser doesnt supports custom elements!')
+        // Use other libraries to create components.
+        }
+        if (supportsTemplate()) {
+        console.log('Browser supports templates!')
+        // Good to go!
+        } else {
+        console.warn('Browser doesnt supports templates!')
+        // Use other libraries to create components.
+        }
+    </script>
+    <!-- page styles -->
+    <style>
+        body {
+            body: #555;
+            font-family: 'Roboto', 'Noto', sans-serif;
+        }
+        
+        p {
+            color: red;
+        }
+        
+        my-custom-paragraph {
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: lightcyan;
+        }
+
+        my-custom-paragraph:hover {
+            background-color: yellow;
+        }
+        /* This doesn't work */
+         my-custom-paragraph > div {
+            background: black;
+        }
+
+        .card {
+            margin: 10px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <!-- main layout -->
+    <div class="card">
+        <p>
+            This is a paragraph defined within the main document.
+        </p>
+        <span>This is a span</span>
+        <div>Some div content</div>
+        <button>Hide p tags</button>
+    </div>
+    <hr />
+    <div class="card">
+        <my-custom-paragraph></my-custom-paragraph>
+    </div>
+    <hr />
+    <div class="card">
+        <my-html-import></my-html-import>
+    </div>
+    <!-- end main layout -->
+    <!-- custom element -->
+    <template id="sdtemplate">
+        <style>
+            :host{
+                display:block;
+            }
+            p {
+                color: orange;
+                font-size: 14pt;
+                padding: 10px;
+            }
+            
+            span {
+                font-size: 20px;
+                padding: 15px;
+            }
+        </style>
+        <div>
+            <p>I'm in Shadow DOM. My markup was stamped from a &lt;template&gt;.</p>
+            <span>I'm a span within a custom element</span>
+        </div>
+    </template>
+    <script>
+        var myElement = Object.create(HTMLElement.prototype);        
+        myElement.createdCallback=  function() {
+            console.log('element is created to DOM');
+
+            var t = document.querySelector('#sdtemplate');
+            //import the template content and all children within
+            var clone = document.importNode(t.content, true);
+            //create the shadow root to the host element and append the children in the shadow tree
+            this.createShadowRoot({mode: 'open'}).appendChild(clone);
+        };
+        myElement.attachedCallback =  function(){
+            console.log('element is attached to DOM');
+        };
+        //attached to dom
+        document.registerElement('my-custom-paragraph', {prototype: myElement});
+
+        var btn = document.querySelector('button');
+            btn.addEventListener('click', function(e) {
+                //returns only elements in light dom
+                var elem = document.querySelector('p');
+                elem.setAttribute("style", "display: none;");
+                
+                //query elements within shadow dom
+                var shadowElem = document.querySelector('my-custom-paragraph').shadowRoot.querySelector('p');
+            });
+        </script>
+    <!-- End custom element -->
+    <!-- HTML Import element-->
+    <script>
+        var content = document.querySelector('link[rel="import"]').import;
+
+        var proto = Object.create(HTMLElement.prototype)
+
+        proto.createdCallback=  function() {
+            console.log('html import element is created to DOM');
+            var t = content.querySelector('#htmlImportTemplate');
+            var clone = document.importNode(t.content, true);
+            this.createShadowRoot().appendChild(clone);
+        };
+        proto.attachedCallback =  function(){
+            console.log('html import element is attached to DOM');
+            
+        };
+        //attached to dom
+        document.registerElement('my-html-import', {prototype: proto});
+    </script>
+    <!-- End HTML Import element-->
+</body>
+
+</html>

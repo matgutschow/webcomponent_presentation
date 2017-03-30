@@ -1,0 +1,82 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="./databinding.html">
+<link rel="import" href="./properties.html">
+<link rel="import" href="./composition.html">
+<link rel="import" href="./styles.html">
+<link rel="import" href="./custom-event.html">
+
+<dom-module id="simple-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+      
+    </style>
+
+      <h1>Simple Component</h1>
+
+<!-- Databinding -->
+    <!--<my-databinding user-input="{{data}}"></my-databinding>    
+    <my-databinding-2 some-input="[[data]]"></my-databinding-2>-->
+<!-- End of Databinding -->
+
+<!-- Properties -->
+    <!--<my-prop-element person=[[person]]></my-prop-element>-->
+<!-- End Properties -->
+
+<!-- Composition -->
+    <!--<my-wrapper-element>
+      <div>
+          <span>Wrapped Content</span>
+      </div>
+    </my-wrapper-element>-->
+<!-- End Composition -->
+
+<!-- Styles -->
+    <!--<style is="custom-style">   
+        :root {
+            /*--my-block-height:  50px;
+            --my-block-width: red;*/
+            /*theme*/
+            --my-block-theme: {
+                    border-radius: 5px;
+                    margin: 10px;
+                    padding: 20px;
+                    background-color: lightgreen;
+                    border: 2px solid gray;
+                    float: left;
+                    display: inline-block;
+                    width: 50px;
+            }
+        }         
+    </style>
+    <my-styles-element></my-styles-element>-->
+<!-- End Styles -->
+
+<!-- Custom Event -->
+  <!--<my-event-element on-my-btn-click="handleClick"></my-event-element>-->
+<!-- End Custom Event -->
+  </template>
+  <script>
+    Polymer({
+      is: 'simple-app',
+      properties: {
+        data: {
+            type: String
+            },
+        person:{
+           type: Object,
+           value: {
+             first: 'test',
+             lastasd: 'user'
+           }
+        }
+      },
+      handleClick: function(payload){
+          alert(payload.detail.data);
+      }
+    });
+  </script>
+</dom-module>

@@ -1,0 +1,75 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<!-- Custom Element 1 -->
+<dom-module id="my-databinding">
+    <template>
+        <style>
+             :host {
+                display: block;
+                text-align: center;
+            }
+            
+            div {
+                padding: 10px;
+            }
+            .wrapper{
+                background: #999;
+                border: 1px solid #333;
+            }
+        </style>
+        <div class="wrapper">
+            <div>
+                <span>One Way Databinding:</span>
+                <label>[[userInput]]</label>
+            </div>
+            <div>
+                <input type="text" value="{{userInput::input}}" />
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-databinding',
+       properties: {
+        userInput: {
+            type: String,
+            value: 'default value',
+            notify: true //push changes upwards to parents
+            }
+        }
+    });
+  </script>
+</dom-module>
+<!-- Custom Element 2 -->
+<dom-module id="my-databinding-2">
+    <template>
+        <style>
+             :host {
+                display: block;
+                margin: 10px 0;
+                text-align: center;
+            }
+            
+            div {
+                padding: 10px;
+            }
+            .wrapper{
+                background: #aaa;
+                border: 1px solid #555;
+            }
+        </style>
+        <div class="wrapper">
+            <span>Input from host:</span>
+            <label>[[someInput]]</label>
+        </div>
+    </template>
+    <script>
+    Polymer({
+      is: 'my-databinding-2',
+       properties: {
+        someInput: {
+            type: String
+            }
+        }
+    });
+  </script>
+</dom-module>
